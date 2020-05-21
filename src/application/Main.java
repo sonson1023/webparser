@@ -1,5 +1,8 @@
 package application;
 	
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -8,9 +11,12 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {
+	
+
+	private static final Logger logger = LogManager.getLogger(SampleController.class);
 	@Override
 	public void start(Stage primaryStage) {
-		
+		logger.info("start");
 		try {
 			
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));

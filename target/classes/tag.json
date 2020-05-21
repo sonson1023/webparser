@@ -1,0 +1,7 @@
+{
+	"gucci" : {
+		"item_code" : " div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel",
+		"item_name" : "div.product-tiles-grid-item-detail > div.product-tiles-grid-item-info > h2",
+		"item_price" : "div.product-tiles-grid-item-detail > div.product-tiles-grid-item-info > p.price > span.sale",
+	}
+}

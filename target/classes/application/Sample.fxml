@@ -22,10 +22,15 @@
                         <WebView fx:id="webView" layoutX="7.0" layoutY="51.0" maxHeight="812.0" maxWidth="375.0" minHeight="812.0" minWidth="375.0" prefHeight="812.0" prefWidth="375.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="51.0" />
                         <TextField fx:id="textUrl" layoutX="14.0" layoutY="14.0" prefHeight="22.0" prefWidth="323.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
                         <Button fx:id="goBtn" layoutX="345.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnGoBtn" text="조회" />
-                        <TableView fx:id="dataView" layoutX="398.0" layoutY="51.0" prefHeight="811.0" prefWidth="1239.0" AnchorPane.leftAnchor="398.0">
+                        <TableView fx:id="tableView" layoutX="398.0" layoutY="51.0" prefHeight="811.0" prefWidth="1239.0" AnchorPane.leftAnchor="398.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                              <TableColumn fx:id="col_index" prefWidth="42.0" text="col_index" />
+                              <TableColumn fx:id="col_code" editable="false" prefWidth="183.0" sortable="false" text="col_item_code" />
+                            <TableColumn fx:id="col_name" editable="false" minWidth="0.0" prefWidth="261.0" sortable="false" text="col_item_name" />
+                            <TableColumn fx:id="col_price" editable="false" prefWidth="109.0" sortable="false" text="col_item_price" />
+                              <TableColumn fx:id="col_img1" editable="false" prefWidth="229.0" sortable="false" text="col_item_image1" />
+                              <TableColumn fx:id="col_img2" editable="false" prefWidth="181.0" sortable="false" text="col_item_image2" />
+                              <TableColumn fx:id="col_img3" editable="false" prefWidth="232.0" sortable="false" text="col_item_image3" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnLoadCfg" layoutX="560.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnLoadCfg" text="제조사선택" />
