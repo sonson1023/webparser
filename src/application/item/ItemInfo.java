@@ -64,13 +64,20 @@ public class ItemInfo {
 	public void setImg3(String img3) {
 		this.img3.set(img3);
 	}
-
+	
+	public void setItemLink(String itemLink) {
+		this.itemlink.set(itemLink);
+	}
+	public StringProperty getItemLink() {
+		return itemlink;
+	}
 	private StringProperty  price;
 	private StringProperty  name;
 	private StringProperty  index;
 	private StringProperty  img1, img2, img3;
+	private StringProperty	itemlink;
 	
-	public ItemInfo(String index, String code, String name, String price, String img1, String img2, String img3) {
+	public ItemInfo(String index, String code, String name, String price, String img1, String img2, String img3, String itemLink) {
 		this.index = new SimpleStringProperty(index);
 		this.code = new SimpleStringProperty(code);
 		this.name = new SimpleStringProperty(name);
@@ -78,6 +85,7 @@ public class ItemInfo {
 		this.img1 = new SimpleStringProperty(img1);
 		this.img2 = new SimpleStringProperty(img2);
 		this.img3 = new SimpleStringProperty(img3);
+		this.itemlink = new SimpleStringProperty(itemLink);
 		
 	}
 }
