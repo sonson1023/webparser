@@ -12,9 +12,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="950.0" maxWidth="1650.0" minHeight="950.0" minWidth="1650.0" prefHeight="950.0" prefWidth="1122.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<BorderPane fx:id="boarder" maxHeight="950.0" maxWidth="1650.0" minHeight="1080.0" minWidth="1920.0" prefHeight="950.0" prefWidth="1122.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <center>
       <TabPane prefHeight="900.0" prefWidth="1104.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -22,24 +23,32 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="839.0" prefWidth="1130.0">
                      <children>
-                        <WebView fx:id="webView" layoutX="7.0" layoutY="51.0" maxHeight="812.0" maxWidth="375.0" minHeight="812.0" minWidth="375.0" prefHeight="812.0" prefWidth="375.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="51.0" />
-                        <TextField fx:id="textUrl" layoutX="96.0" layoutY="10.0" prefHeight="22.0" prefWidth="471.0" text="http://www.google.com" AnchorPane.leftAnchor="96.0" AnchorPane.topAnchor="10.0" />
-                        <Button fx:id="goBtn" layoutX="580.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnGoBtn" text="조회" />
-                        <TableView fx:id="tableView" layoutX="497.0" layoutY="51.0" prefHeight="819.0" prefWidth="1240.0" tableMenuButtonVisible="true" AnchorPane.leftAnchor="398.0">
+                        <WebView fx:id="webView" layoutX="7.0" layoutY="51.0" maxHeight="812.0" maxWidth="375.0" minHeight="812.0" minWidth="375.0" prefHeight="812.0" prefWidth="375.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="51.0" />
+                        <TextField fx:id="textUrl" layoutX="278.0" layoutY="10.0" prefHeight="22.0" prefWidth="390.0" text="http://www.google.com" AnchorPane.leftAnchor="278.0" AnchorPane.topAnchor="10.0" />
+                        <Button fx:id="goBtn" layoutX="675.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnGoBtn" text="조회" />
+                        <TableView fx:id="tableView" layoutX="497.0" layoutY="51.0" prefHeight="965.0" prefWidth="1240.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="398.0" AnchorPane.topAnchor="51.0">
                           <columns>
-                              <TableColumn fx:id="col_index" prefWidth="42.0" text="col_index" />
+                              <TableColumn fx:id="col_index" editable="false" prefWidth="42.0" text="col_index" />
                               <TableColumn fx:id="col_code" editable="false" prefWidth="131.0" sortable="false" text="col_item_code" />
                             <TableColumn fx:id="col_name" editable="false" minWidth="0.0" prefWidth="146.0" sortable="false" text="col_item_name" />
-                            <TableColumn fx:id="col_price" editable="false" prefWidth="134.0" sortable="false" text="col_item_price" />
+                            <TableColumn fx:id="col_price" prefWidth="134.0" sortable="false" text="col_item_price" />
+                              <TableColumn fx:id="col_won" prefWidth="75.0" text="col_won" />
                               <TableColumn fx:id="col_img1" editable="false" prefWidth="145.0" sortable="false" text="col_item_image1" />
                               <TableColumn fx:id="col_img2" editable="false" prefWidth="129.0" sortable="false" text="col_item_image2" />
                               <TableColumn fx:id="col_img3" editable="false" maxWidth="226.0" minWidth="130.0" prefWidth="204.0" sortable="false" text="col_item_image3" />
                               <TableColumn fx:id="col_link" editable="false" maxWidth="250.0" prefWidth="228.0" sortable="false" text="col_link" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnLoadCfg" layoutX="633.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnLoadCfg" text="크롤링" />
-                        <ComboBox fx:id="cbMaker" layoutX="10.0" layoutY="10.0" onAction="#OnSelctMaker" prefHeight="22.0" prefWidth="76.0" />
-                        <Button fx:id="btnExtract" layoutX="694.0" layoutY="10.0" mnemonicParsing="false" text="데이터추출" />
+                        <Button fx:id="btnLoadCfg" layoutX="728.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnLoadCfg" text="분석" />
+                        <ComboBox fx:id="cbMaker" layoutX="10.0" layoutY="10.0" onAction="#OnSelctMaker" prefHeight="22.0" prefWidth="90.0" />
+                        <Button fx:id="btnExtract" layoutX="789.0" layoutY="10.0" mnemonicParsing="false" text="데이터추출" />
+                        <TextField fx:id="tb_currency" alignment="CENTER_RIGHT" layoutX="914.0" layoutY="10.0" prefHeight="22.0" prefWidth="78.0" text="1380" />
+                        <WebView fx:id="adview" layoutX="1649.0" layoutY="74.0" prefHeight="940.0" prefWidth="271.0" />
+                        <ComboBox fx:id="cbType" layoutX="113.0" layoutY="10.0" prefHeight="22.0" prefWidth="99.0" />
+                        <Text layoutX="874.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="환율 : " />
+                        <Text layoutX="1002.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="각종 수수료 : " />
+                        <TextField layoutX="1082.0" layoutY="9.0" promptText="10%" />
+                        <ComboBox fx:id="cbSex" layoutX="219.0" layoutY="10.0" prefHeight="22.0" prefWidth="24.0" />
                      </children>
                   </AnchorPane>
             </content>

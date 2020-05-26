@@ -1,7 +1,27 @@
 {
+
+	"maker" : ["gucci","prada"],
+	"sex" :["man","women"],
+	"categories" : ["bag","shoes"],
 	"gucci" : {
+		"bag_link" : "https://www.gucci.com/de/de/ca/women/handbags-c-women-handbags",
+		"shoes_link" : "https://www.gucci.com/de/de/ca/women/shoes-for-women-c-women-shoes",
 		"item_code" : " div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel",
-		"item_name" : "div.product-tiles-grid-item-detail > div.product-tiles-grid-item-info > h2",
-		"item_price" : "div.product-tiles-grid-item-detail > div.product-tiles-grid-item-info > p.price > span.sale",
-	}
+		"item_name" : " div.product-tiles-grid-item-detail > div.product-tiles-grid-item-info > h2",
+		"item_price" : " div.product-tiles-grid-item-info > p.price", 
+		"item_img1" :"div.product-tiles-grid-item-image-wrapper > div > img",
+		"item_img2" :" div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel > div > div:nth-child(1) > div > img",
+		"item_img3" :" div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel > div > div:nth-child(2) > div > img"
+	},
+	"prada" :{
+		"bag_link" : "https://www.prada.com/de/de/women/bags.html",
+		"shoes_link" : "https://www.prada.com/de/de/women/shoes.html",
+		"item_code" : "#content > div.category > div.externalWrapperGrid > div.gridCategory.row.rowComponent > div.gridCategory__wrapper.js-plp-items-wrapper > div",
+		"item_name" : "#content > div.category > div.externalWrapperGrid > div.gridCategory.row.rowComponent > div.gridCategory__wrapper.js-plp-items-wrapper > * > div > div.productQB__info > div.productQB__desc > a",
+		"item_price" : "#content > div.category > div.externalWrapperGrid > div.gridCategory.row.rowComponent > div.gridCategory__wrapper.js-plp-items-wrapper > *> div > div.productQB__info > div.productQB__desc > div > p",
+		"item_img1" :"div.productQB__imageFront > picture > img",
+		"item_img2" :"",
+		"item_img3" :"",
+		"item_imgSrc" : ""
+	},
 }

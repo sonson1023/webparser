@@ -1,6 +1,9 @@
-package application;
+package application.utils;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +13,16 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import application.item.ItemInfo;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.FileChooser;
 
 public class Utils {
 
 	private static final Logger logger = LogManager.getLogger(Utils.class);
-
+	 
 	public static void ShowAlert(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("확인 필요");
@@ -60,4 +66,24 @@ public class Utils {
 		} 
 		return list; 
 	}
+
+	public static List<String> readCategories() {
+		List<String> list = new ArrayList();
+		JSONObject obj = readConfig();
+		JSONArray array = (JSONArray) obj.get("categories");
+		for(int i=0; i< array.length(); i++) {
+			list.add(array.getString(i));
+		} 
+		return list; 
+	}
+
+	public static List<String> readSex() {
+		List<String> list = new ArrayList();
+		JSONObject obj = readConfig();
+		JSONArray array = (JSONArray) obj.get("sex");
+		for(int i=0; i< array.length(); i++) {
+			list.add(array.getString(i));
+		} 
+		return list; 
+	} 
 }
