@@ -1,9 +1,12 @@
 package application.utils;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.FileDescriptor;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +16,9 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import application.item.ItemInfo;
-import javafx.scene.Scene;
+import application.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
 
 public class Utils {
 
@@ -42,12 +43,24 @@ public class Utils {
 	public static JSONObject readConfig() {
 		JSONObject json = null ;
 		try { 
-			String fileName ="tag.json";
-			ClassLoader classLoader = new Utils().getClass().getClassLoader();
-			File file = new File(classLoader.getResource(fileName).getFile());
-			String contents = new String(Files.readAllBytes(file.toPath()));
-			json = new JSONObject(contents);
+			String fileName ="/tag.json";
+			
+			
+		    InputStream res =
+    	    Main.class.getResourceAsStream(fileName);
+
+    	    BufferedReader reader =
+    	        new BufferedReader(new InputStreamReader(res));
+    	    String line = null;
+    	    StringBuilder sb = new StringBuilder();
+    	    while ((line = reader.readLine()) != null) {
+    	        sb.append(line);
+    	    }
+    	    reader.close();
+    	    
+			json = new JSONObject(sb.toString());
 			logger.info(json.toString());
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 			logger.error(e.getLocalizedMessage());

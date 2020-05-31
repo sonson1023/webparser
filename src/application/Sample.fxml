@@ -39,9 +39,9 @@
                               <TableColumn fx:id="col_link" editable="false" maxWidth="250.0" prefWidth="228.0" sortable="false" text="col_link" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnLoadCfg" layoutX="728.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnLoadCfg" text="분석" />
+                        <Button fx:id="btnLoadCfg" layoutX="728.0" layoutY="10.0" mnemonicParsing="false" text="분석" />
                         <ComboBox fx:id="cbMaker" layoutX="10.0" layoutY="10.0" onAction="#OnSelctMaker" prefHeight="22.0" prefWidth="90.0" />
-                        <Button fx:id="btnExtract" layoutX="789.0" layoutY="10.0" mnemonicParsing="false" text="데이터추출" />
+                        <Button fx:id="btnExtract" layoutX="789.0" layoutY="10.0" mnemonicParsing="false" text="이미지추출" />
                         <TextField fx:id="tb_currency" alignment="CENTER_RIGHT" layoutX="914.0" layoutY="10.0" prefHeight="22.0" prefWidth="78.0" text="1380" />
                         <WebView fx:id="adview" layoutX="1649.0" layoutY="74.0" prefHeight="940.0" prefWidth="271.0" />
                         <ComboBox fx:id="cbType" layoutX="113.0" layoutY="10.0" prefHeight="22.0" prefWidth="99.0" />

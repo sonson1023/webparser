@@ -14,14 +14,18 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import application.item.ItemInfo; 
 import application.utils.GucciParser;
-import application.utils.Utils;
-import application.utils.GucciParser.ItemSrc;
+import application.utils.ItemSrc;
+import application.utils.Utils; 
+import application.utils.PradaParser;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
@@ -66,6 +70,7 @@ public class SampleController implements Initializable {
 	private ObservableList<ItemInfo> tableData = FXCollections.observableArrayList();
 	
 	GucciParser gucciParser;
+	PradaParser pradaParser;
 	Scene scene ;
 	
 	private static org.json.JSONObject config;
@@ -98,10 +103,13 @@ public class SampleController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub 
   
+		//조회
 		goBtn.setOnAction(event -> OnGoBtn(event));
 		cbMaker.setOnAction(evt -> OnSelctMaker(evt));
 		cbType.setOnAction(evt -> onSelectCategory(evt));
 		cbSex.setOnAction(evt ->OnSelectSex(evt));
+		btnLoadCfg.setOnAction(evt -> OnLoadCfg(evt));
+	 
 		btnExtract.setOnAction(evt -> OnExtract(evt));
 		
 		webEngine = webView.getEngine();
@@ -143,6 +151,10 @@ public class SampleController implements Initializable {
 	    setContextMenu();
 	    
 	} 
+	
+	public void getScene() {
+		this.scene = boarder.getScene();
+	}
 	
 	private void setContextMenu() {
 		ContextMenu menu = new ContextMenu();
@@ -198,29 +210,35 @@ public class SampleController implements Initializable {
 				String img3 = t.getImg3().get();
 				
 				logger.info("img1 : {}, img2 : {}, img3 : {}", img1, img2, img3);
-				
-				if(img1.length() > 0)
-					gucciParser.saveImg(img1,"./img/", code+"_1", "jpg");
-				if(img2.length() > 0)
-					gucciParser.saveImg(img2,"./img/", code+"_2", "jpg");
-				if(img3.length() > 0)
-					gucciParser.saveImg(img3, "./img/", code+"_3", "jpg");
+				String cdir = "C:/img/";
+				if(img1.length() > 5)
+					gucciParser.saveImg(img1, cdir, code+"_1", "jpg");
+				if(img2.length() > 5)
+					gucciParser.saveImg(img2,cdir, code+"_2", "jpg");
+				if(img3.length() > 5)
+					gucciParser.saveImg(img3, cdir, code+"_3", "jpg");
 			}
 		};
-		
-		tableView.getItems().stream().forEach(consumer);
-		Utils.ShowAlert("이미지 저장 완료");
-		
+		try {
+			this.boarder.getScene().setCursor(Cursor.WAIT);
+			tableView.getItems().stream().forEach(consumer);
+			Utils.ShowAlert("이미지 저장 완료");
+		}
+		catch(Exception e) {
+			Utils.ShowAlert("이미지 저장 실패, " + e.getLocalizedMessage());
+		}
+		finally {
+			this.boarder.getScene().setCursor(Cursor.DEFAULT);
+		}
 	}
 	
-	
-
 
 	//페이지 이동
 	public void OnGoBtn(ActionEvent event) {
 		if(textUrl.getText().length() > 0) {
 			String url = textUrl.getText();
 			webEngine.load(url);
+			
 		}else {
 			Utils.ShowAlert("URL 필요");
 		}
@@ -230,6 +248,7 @@ public class SampleController implements Initializable {
 	@SuppressWarnings("unused")
 	public void OnLoadCfg(ActionEvent event) {
 		//Utils.ShowAlert("filter"); 
+		this.boarder.getScene().setCursor(Cursor.WAIT);
 		
 		String html =  webEngine.executeScript("document.documentElement.outerHTML").toString();
 		ArrayList<String> codeList = null; 
@@ -260,7 +279,25 @@ public class SampleController implements Initializable {
 				nameList = gucciParser.getListName();
 				priceList = gucciParser.getListPrice();
 				imgSrcList = gucciParser.getImgSrcSetList();
-			}else {
+			}
+			else if(maker.equals("prada"))
+			{
+				pradaParser = new PradaParser(html);
+				JSONObject obj = (JSONObject)config.get(maker);
+				
+				String item_code = obj.getString("item_code");
+				String item_name = obj.getString("item_name");
+				String item_price = obj.getString("item_price"); 
+				String item_img1 = obj.getString("item_img1");
+				String item_img2 = obj.getString("item_img2");
+				String item_img3 = obj.getString("item_img3"); 
+				
+				pradaParser.parser();
+				
+				codeList= pradaParser.getListCode();
+				nameList = pradaParser.getListName();
+				priceList = pradaParser.getListPrice();
+				imgSrcList = pradaParser.getImgSrcSetList();
 				
 			}
 			
@@ -276,6 +313,8 @@ public class SampleController implements Initializable {
 			tableView.refresh();
 		}catch(Exception e) {
 			Utils.ShowAlert("parseing error : " + e.getLocalizedMessage());
+		}finally {
+			this.boarder.getScene().setCursor(Cursor.DEFAULT);
 		}
 		
 	}
@@ -291,11 +330,11 @@ public class SampleController implements Initializable {
 		logger.info("click categories : {}", cbType.getValue() );
 		String maker = cbMaker.getValue();
 		String category = cbType.getValue();
+		
 		if(maker.isEmpty())
 		{
 			Utils.ShowAlert("메이커를 먼저 선택하세요");
 		}else {
-
 			JSONObject obj = (JSONObject) config.get(maker);
 			String categoryTag = category + "_link";
 			String url = obj.getString(categoryTag);
@@ -305,6 +344,6 @@ public class SampleController implements Initializable {
 	 
 	public void OnSelctMaker(ActionEvent evt) { 
 		logger.info("maker click : " + cbMaker.getValue()); 
-		
+		textUrl.setText("");		
 	} 
 }

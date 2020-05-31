@@ -15,7 +15,7 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	
 
-	private static final Logger logger = LogManager.getLogger(SampleController.class);
+	private static final Logger logger = LogManager.getLogger(Main.class);
 	@Override
 	public void start(Stage primaryStage) {
 		logger.info("start");
@@ -27,10 +27,10 @@ public class Main extends Application {
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			 
 			
 		} catch(Exception e) {
 			e.printStackTrace();
+			logger.error(e.getLocalizedMessage());
 		}
 	}
 	
