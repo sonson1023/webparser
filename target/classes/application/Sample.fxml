@@ -41,14 +41,15 @@
                         </TableView>
                         <Button fx:id="btnLoadCfg" layoutX="728.0" layoutY="10.0" mnemonicParsing="false" text="분석" />
                         <ComboBox fx:id="cbMaker" layoutX="10.0" layoutY="10.0" onAction="#OnSelctMaker" prefHeight="22.0" prefWidth="90.0" />
-                        <Button fx:id="btnExtract" layoutX="789.0" layoutY="10.0" mnemonicParsing="false" text="이미지추출" />
-                        <TextField fx:id="tb_currency" alignment="CENTER_RIGHT" layoutX="914.0" layoutY="10.0" prefHeight="22.0" prefWidth="78.0" text="1380" />
+                        <Button fx:id="btnExtract" layoutX="790.0" layoutY="10.0" mnemonicParsing="false" text="이미지추출" />
+                        <TextField fx:id="tb_currency" alignment="CENTER_RIGHT" layoutX="995.0" layoutY="10.0" prefHeight="22.0" prefWidth="78.0" text="1380" />
                         <WebView fx:id="adview" layoutX="1649.0" layoutY="74.0" prefHeight="940.0" prefWidth="271.0" />
                         <ComboBox fx:id="cbType" layoutX="113.0" layoutY="10.0" prefHeight="22.0" prefWidth="99.0" />
-                        <Text layoutX="874.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="환율 : " />
-                        <Text layoutX="1002.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="각종 수수료 : " />
-                        <TextField layoutX="1082.0" layoutY="9.0" promptText="10%" />
+                        <Text layoutX="955.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="환율 : " />
+                        <Text layoutX="1083.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="각종 수수료 : " />
+                        <TextField layoutX="1163.0" layoutY="9.0" promptText="10%" />
                         <ComboBox fx:id="cbSex" layoutX="219.0" layoutY="10.0" prefHeight="22.0" prefWidth="24.0" />
+                        <Button fx:id="btnClear" layoutX="877.0" layoutY="9.0" mnemonicParsing="false" text="clear" />
                      </children>
                   </AnchorPane>
             </content>

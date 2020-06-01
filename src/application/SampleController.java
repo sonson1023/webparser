@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import application.item.ItemInfo; 
 import application.utils.GucciParser;
 import application.utils.ItemSrc;
+import application.utils.Parser;
 import application.utils.Utils; 
 import application.utils.PradaParser;
 import javafx.application.Platform;
@@ -43,6 +44,7 @@ public class SampleController implements Initializable {
 	@FXML private Button goBtn; 
 	@FXML private Button btnLoadCfg;
 	@FXML private Button btnExtract;
+	@FXML private Button btnClear;
 	@FXML private WebView webView;
 	@FXML private WebView adview;
 	@FXML private TextField textUrl;
@@ -71,6 +73,7 @@ public class SampleController implements Initializable {
 	
 	GucciParser gucciParser;
 	PradaParser pradaParser;
+	Parser parser;
 	Scene scene ;
 	
 	private static org.json.JSONObject config;
@@ -109,11 +112,11 @@ public class SampleController implements Initializable {
 		cbType.setOnAction(evt -> onSelectCategory(evt));
 		cbSex.setOnAction(evt ->OnSelectSex(evt));
 		btnLoadCfg.setOnAction(evt -> OnLoadCfg(evt));
-	 
+		btnClear.setOnAction(evt -> OnClearDataView(evt));
 		btnExtract.setOnAction(evt -> OnExtract(evt));
 		
 		webEngine = webView.getEngine();
-		webEngine.setUserAgent(USER_AGENT);
+		//webEngine.setUserAgent(USER_AGENT);
 		
 		adWebEngine = adview.getEngine();
 		adWebEngine.loadContent(htmlCode, "text/html");
@@ -135,6 +138,7 @@ public class SampleController implements Initializable {
 		col_img1.setCellValueFactory(x -> x.getValue().getImg1());
 		col_img2.setCellValueFactory(x -> x.getValue().getImg2());
 		col_img3.setCellValueFactory(x -> x.getValue().getImg3()); 
+		col_link.setCellValueFactory(x -> x.getValue().getItemLink());
 		
 
 		tableView.getSelectionModel().setCellSelectionEnabled(true);
@@ -152,6 +156,12 @@ public class SampleController implements Initializable {
 	    
 	} 
 	
+	private void OnClearDataView(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		tableView.getItems().clear();
+		tableData.clear();		
+	}
+
 	public void getScene() {
 		this.scene = boarder.getScene();
 	}
@@ -211,12 +221,13 @@ public class SampleController implements Initializable {
 				
 				logger.info("img1 : {}, img2 : {}, img3 : {}", img1, img2, img3);
 				String cdir = "C:/img/";
-				if(img1.length() > 5)
-					gucciParser.saveImg(img1, cdir, code+"_1", "jpg");
-				if(img2.length() > 5)
-					gucciParser.saveImg(img2,cdir, code+"_2", "jpg");
-				if(img3.length() > 5)
-					gucciParser.saveImg(img3, cdir, code+"_3", "jpg");
+				
+				if(img1 != null)
+					parser.saveImg(img1, cdir, code+"_1", "jpg");
+				if(img2 != null)
+					parser.saveImg(img2,cdir, code+"_2", "jpg");
+				if(img3 != null)
+					parser.saveImg(img3, cdir, code+"_3", "jpg");
 			}
 		};
 		try {
@@ -251,38 +262,36 @@ public class SampleController implements Initializable {
 		this.boarder.getScene().setCursor(Cursor.WAIT);
 		
 		String html =  webEngine.executeScript("document.documentElement.outerHTML").toString();
-		ArrayList<String> codeList = null; 
-		ArrayList<String> nameList= null;
-		ArrayList<String> priceList = null;
+		ArrayList<String> priceList = null, linkList = null, nameList= null, codeList = null;
+		
 		HashMap<Integer, ItemSrc> imgSrcList = null;
 		
 		try {
 			String maker = cbMaker.getValue();
 			if(maker.equals("gucci")) {
-				gucciParser = new GucciParser(html); 
+				parser = new GucciParser(html); 
 				JSONObject obj = (JSONObject) config.get(maker);
+				
 				String item_code = obj.getString("item_code");
 				String item_name = obj.getString("item_name");
 				String item_price = obj.getString("item_price"); 
 				String item_img1 = obj.getString("item_img1");
 				String item_img2 = obj.getString("item_img2");
 				String item_img3 = obj.getString("item_img3");
-
-				gucciParser.set_item_code(item_code);
-				gucciParser.set_item_name(item_name);
-				gucciParser.set_item_price(item_price); 
-				gucciParser.set_imgSrc(item_img1, item_img2, item_img3);
+				String item_link = obj.getString("item_link");
+				 
 				
-				gucciParser.parser();
-				
-				codeList= gucciParser.getListCode();
-				nameList = gucciParser.getListName();
-				priceList = gucciParser.getListPrice();
-				imgSrcList = gucciParser.getImgSrcSetList();
+				parser.parser(item_code, item_name, item_price, item_img1, item_img2, item_img3, item_link);
+				 
+				codeList= parser.getListCode();
+				nameList = parser.getListName();
+				priceList = parser.getListPrice();
+				imgSrcList = parser.getImgSrcSetList();
+				linkList = parser.getLinkList();
 			}
 			else if(maker.equals("prada"))
 			{
-				pradaParser = new PradaParser(html);
+				parser  = new PradaParser(html);
 				JSONObject obj = (JSONObject)config.get(maker);
 				
 				String item_code = obj.getString("item_code");
@@ -290,29 +299,45 @@ public class SampleController implements Initializable {
 				String item_price = obj.getString("item_price"); 
 				String item_img1 = obj.getString("item_img1");
 				String item_img2 = obj.getString("item_img2");
-				String item_img3 = obj.getString("item_img3"); 
+				String item_img3 = obj.getString("item_img3");
+				String item_link = obj.getString("item_link");
+				 
 				
-				pradaParser.parser();
+				parser.parser(item_code, item_name, item_price, item_img1, item_img2, item_img3, item_link);
 				
-				codeList= pradaParser.getListCode();
-				nameList = pradaParser.getListName();
-				priceList = pradaParser.getListPrice();
-				imgSrcList = pradaParser.getImgSrcSetList();
+				codeList= parser.getListCode();
+				nameList = parser.getListName();
+				priceList = parser.getListPrice();
+				imgSrcList = parser.getImgSrcSetList();
+				linkList = parser.getLinkList();
 				
 			}
 			
 			tableView.getItems().clear();
-			int currency = Integer.parseInt(tb_currency.getText().replace(",", "").replace("$", "").replace(" ", "").replace("€", "").replace("£", ""));			
+			tableData.clear();
+			int currency = Integer.parseInt(tb_currency.getText().replace(",", "").replace("$", "").replace(" ", "").replace("€", "").replace("£", ""));
+			String index, code, name, price ="";
+			String  img1, img2, img3;
+			String itemLink;
+			
 			for(int i=0; i< codeList.size(); i++) {
-				ItemInfo e = new ItemInfo(Integer.toString(i),codeList.get(i), nameList.get(i), priceList.get(i), 
-						imgSrcList.get(i).getImg1(), imgSrcList.get(i).getImg2(), imgSrcList.get(i).getImg3(), "http", currency);
+				index = Integer.toString(i);
+				code = codeList.get(i);
+				name = nameList.get(i);
+				price = priceList.get(i);
+				img1 = imgSrcList.get(i).getImg1();
+				img2 = imgSrcList.get(i).getImg2();
+				img3 = imgSrcList.get(i).getImg3();
+				itemLink = linkList.get(i);
+				
+				ItemInfo e = new ItemInfo(index, code, name, price, img1,img2,img3, itemLink, currency);
 				tableData.add(e);
 			}
 			
 			tableView.setItems(tableData);
 			tableView.refresh();
 		}catch(Exception e) {
-			Utils.ShowAlert("parseing error : " + e.getLocalizedMessage());
+			Utils.ShowAlert(this.getClass().getName() + "  parseing error : "+ e.getLocalizedMessage());
 		}finally {
 			this.boarder.getScene().setCursor(Cursor.DEFAULT);
 		}

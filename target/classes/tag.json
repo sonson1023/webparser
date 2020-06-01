@@ -1,6 +1,6 @@
 {
 
-	"maker" : ["gucci","prada"],
+	"maker" : ["gucci","prada", "chanel", "louis_vuitton"],
 	"sex" :["man","women"],
 	"categories" : ["bag","shoes"],
 	"gucci" : {
@@ -9,9 +9,10 @@
 		"item_code" : " div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel",
 		"item_name" : " div.product-tiles-grid-item-detail > div.product-tiles-grid-item-info > h2",
 		"item_price" : " div.product-tiles-grid-item-info > p.price", 
-		"item_img1" :"div.product-tiles-grid-item-image-wrapper > div > img",
+		"item_img1" : "div.product-tiles-grid-item-image-wrapper > div > img",
 		"item_img2" :" div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel > div > div:nth-child(1) > div > img",
-		"item_img3" :" div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel > div > div:nth-child(2) > div > img"
+		"item_img3" :" div.product-tiles-grid-item-detail > div.carousel.product-tiles-grid-item-carousel > div > div:nth-child(2) > div > img",
+		"item_link" : "#page > div.content.search-result.new-4-cols-layout > div > article > a"
 	},
 	"prada" :{
 		"bag_link" : "https://www.prada.com/de/de/women/bags.html",
@@ -19,10 +20,10 @@
 		"item_code" : "#content > div.category > div.externalWrapperGrid > div.gridCategory.row.rowComponent > div.gridCategory__wrapper.js-plp-items-wrapper > div",
 		"item_name" : "#content > div.category > div.externalWrapperGrid > div.gridCategory.row.rowComponent > div.gridCategory__wrapper.js-plp-items-wrapper > * > div > div.productQB__info > div.productQB__desc > a",
 		"item_price" : "#content > div.category > div.externalWrapperGrid > div.gridCategory.row.rowComponent > div.gridCategory__wrapper.js-plp-items-wrapper > *> div > div.productQB__info > div.productQB__desc > div > p",
-		"item_img1" :"div.productQB__imageFront > picture > img",
-		"item_img2" :"",
+		"item_img1" : "div > div.productQB__wrapperOut > a > div.productQB__imageFront > picture > source:nth-child(2)",
+		"item_img2" : "",
 		"item_img3" :"",
-		"item_imgSrc" : ""
+		"item_link" : "#content > div.category > div.externalWrapperGrid > div.gridCategory.row.rowComponent > div.gridCategory__wrapper.js-plp-items-wrapper > div > div > div.productQB__info > div.productQB__desc > a"
 	},
 }
 ';
